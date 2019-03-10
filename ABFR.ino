@@ -8,7 +8,7 @@ int R_IN3 = 5;
 int L_IN2 = 6;
 int L_IN1 = 7;
 long left, centar, righ, Time0 , Time1, Time2, cm1, cm2;
-
+  boolean fire = false;
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
@@ -52,55 +52,82 @@ void loop() { // put your main code here, to run repeatedly:
 
 
 
-  
+  /*
+    R_IR_sensor
+    C_R_IR_sensor
+    C_L_IR_sensor
+    L_IR_sensor
+  */
 
 
 
 
-    if (centar < 30 ) {
-
-    if (centar == 15 ) {
-
-      BackMove();
-      Serial.println("BackMoveBackMoveBackMoveBackMoveBackMoveBackMove");
-    }
-    else if (righ > 40 ) {
-      rightMove();
-      rightMove();
-      
-      centar == 29;
-
-
-
-    }
-    else
-    {
-      leftMove();
-      leftMove();
-     
-
-      centar == 29;
-
-    }
-    }
-
-    else
-    {
-
-    if(R_IR_sensor <=500){
+  while (R_IR_sensor <= 800) {
+   // fire = true;
     rightMove();
-     Move();
+    R_IR_sensor = analogRead(A0);
+   
+    if (R_IR_sensor > 500 ) {
+      StoptMove();
+      break;
+
     }
-    else if(L_IR_sensor <= 500){
+  }
+
+
+
+  while (L_IR_sensor <= 800) {
+  //  fire = true;
     leftMove();
-     Move();
+    L_IR_sensor = analogRead(A3);
+    if (L_IR_sensor > 500 ) {
+      StoptMove();
+      break;
     }
+  }
 
-    else if( C_R_IR_sensor <= 500 || C_L_IR_sensor <= 500){
-     Move();
-    }
 
+
+  while ( (C_R_IR_sensor <= 800) || fire  ) {
+    fire = true;
+   
+    C_R_IR_sensor = analogRead(A1);
+  
+   
+      if (centar < 30 ) {
+
+        if (centar == 15 ) {
+          BackMove();
+          Serial.println("BackMoveBackMoveBackMoveBackMoveBackMoveBackMove");
+        }
+        else if (righ > 40 ) {
+          rightMove();
+          rightMove();
+          Serial.println("في شرط اليمين");
+          centar == 29;
+
+        }
+        else
+        {
+          leftMove();
+          leftMove();
+          Serial.println("في شرط اليسار");
+          centar == 29;
+        }
+      } else {
+        Move();
+      } 
+    if ( C_R_IR_sensor > 500 ) {
+       StoptMove();
+      break;
     }
+  }
+
+
+   
+
+
+
 
    Serial.println();
   delay(2000);
