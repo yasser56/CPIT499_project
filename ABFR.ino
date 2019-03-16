@@ -1,22 +1,24 @@
 #include <Servo.h>
+#include "car.h"
+#include "ultrasonicSensor.h"
+int sensorPin = A5;
+long  disLeft, disCenter, disRight;
+int Buz = A4;
 Servo myservo;
-const int pingPin_left = 8;
-const int pingPin_centar = 2;
-const int pingPin_righ = 3;
-int R_IN4 = 4;
-int R_IN3 = 5;
-int L_IN2 = 6;
-int L_IN1 = 7;
-long left, centar, righ, Time0 , Time1, Time2, cm1, cm2;
+car car1 (4, 5, 6, 7);
+ultrasonicSensor  S_left(8);
+ultrasonicSensor  S_center(2);
+ultrasonicSensor  S_right(3);
+
   boolean fire = false;
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
   //-----------------------------------------
-  pinMode(R_IN4, OUTPUT);
-  pinMode(R_IN3, OUTPUT);
-  pinMode(L_IN2, OUTPUT);
-  pinMode(L_IN1, OUTPUT);
+  pinMode(car1.getR_IN4(), OUTPUT);
+  pinMode(car1.getR_IN3(), OUTPUT);
+  pinMode(car1.getL_IN2(), OUTPUT);
+  pinMode(car1.getL_IN1(), OUTPUT);
   myservo.attach(9);      
 
   //-----------------------------------------
@@ -59,8 +61,13 @@ void loop() { // put your main code here, to run repeatedly:
     L_IR_sensor
   */
 
-
-
+ //---------------------------------------------------------------------------------------------------------------------------------
+  // left Ultrasonic Sensor
+  disLeft =  S_left.getDistance();
+// Centar Ultrasonic Sensor
+  disCenter = S_center.getDistance();
+//  righ Ultrasonic Sensor
+  disRight = S_right.getDistance();
 
   while (R_IR_sensor <= 800) {
    // fire = true;
@@ -88,9 +95,9 @@ void loop() { // put your main code here, to run repeatedly:
 
 
 
-  while ( (C_R_IR_sensor <= 800) || fire  ) {
+  while ( (C_R_IR_sensor <= 800)  ) {
     fire = true;
-   
+   tone(A4, 6000);
     C_R_IR_sensor = analogRead(A1);
   
    
