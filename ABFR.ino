@@ -71,11 +71,11 @@ void loop() { // put your main code here, to run repeatedly:
 
   while (R_IR_sensor <= 800) {
    // fire = true;
-    rightMove();
+   car1.rightMove();
     R_IR_sensor = analogRead(A0);
    
     if (R_IR_sensor > 500 ) {
-      StoptMove();
+    car1.StoptMove();
       break;
 
     }
@@ -85,10 +85,10 @@ void loop() { // put your main code here, to run repeatedly:
 
   while (L_IR_sensor <= 800) {
   //  fire = true;
-    leftMove();
+    car1.leftMove();
     L_IR_sensor = analogRead(A3);
     if (L_IR_sensor > 500 ) {
-      StoptMove();
+      car1.StoptMove();
       break;
     }
   }
