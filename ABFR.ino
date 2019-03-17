@@ -71,11 +71,13 @@ void loop() { // put your main code here, to run repeatedly:
 
   while (R_IR_sensor <= 800) {
    // fire = true;
+     tone(A4, 6000);
    car1.rightMove();
     R_IR_sensor = analogRead(A0);
    
     if (R_IR_sensor > 500 ) {
     car1.StoptMove();
+       noTone(A4);
       break;
 
     }
@@ -85,22 +87,26 @@ void loop() { // put your main code here, to run repeatedly:
 
   while (L_IR_sensor <= 800) {
   //  fire = true;
+     tone(A4, 6000);
     car1.leftMove();
     L_IR_sensor = analogRead(A3);
     if (L_IR_sensor > 500 ) {
       car1.StoptMove();
+       noTone(A4);
       break;
     }
   }
 
 
 
-  while ( (C_R_IR_sensor <= 800)  ) {
+  while ( (C_R_IR_sensor <= 800) || (C_L_IR_sensor <= 800) ) {
     fire = true;
    tone(A4, 6000);
-    C_R_IR_sensor = analogRead(A1);
+    
   
    
+
+  }
       if (centar < 30 ) {
 
         if (centar == 15 ) {
@@ -127,8 +133,6 @@ void loop() { // put your main code here, to run repeatedly:
        car1.StoptMove();
       break;
     }
-  }
-
 
    
 
@@ -136,7 +140,21 @@ void loop() { // put your main code here, to run repeatedly:
 
 
    Serial.println();
-  delay(2000);
+ // delay(2000);
+}
+void put_out() {
+ digitalWrite(A0, HIGH);
+  for (int i = 0; i < 90; i += 1) // goes from 0 degrees to 90 degrees
+  { // in steps of 1 degree
+    myservo.write(i);              // tell servo to go to position in variable 'pos'
+    delay(15);                       // waits 15ms for the servo to reach the position
+  }
+  for (int i = 90; i >= 1; i -= 1) // goes from 90 degrees to 0 degrees
+  {
+    myservo.write(i);              // tell servo to go to position in variable 'pos'
+    delay(15);                       // waits 15ms for the servo to reach the position
+  }
+  myservo.write(0);
 }
 
 
