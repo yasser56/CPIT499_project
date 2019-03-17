@@ -104,20 +104,19 @@ void loop() { // put your main code here, to run repeatedly:
       if (centar < 30 ) {
 
         if (centar == 15 ) {
-          BackMove();
+          car1.BackMove();
           Serial.println("BackMoveBackMoveBackMoveBackMoveBackMoveBackMove");
         }
         else if (righ > 40 ) {
-          rightMove();
-          rightMove();
+         car1.rightMove();
           Serial.println("في شرط اليمين");
-          centar == 29;
+          
 
         }
         else
         {
-          leftMove();
-          leftMove();
+          car1.leftMove();
+          
           Serial.println("في شرط اليسار");
           centar == 29;
         }
@@ -125,7 +124,7 @@ void loop() { // put your main code here, to run repeatedly:
         Move();
       } 
     if ( C_R_IR_sensor > 500 ) {
-       StoptMove();
+       car1.StoptMove();
       break;
     }
   }
