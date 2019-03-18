@@ -205,12 +205,14 @@ void loop() { // put your main code here, to run repeatedly:
         L_IR_sensor = analogRead(A3);
       } 
     
+        if ((C_R_IR_sensor <= 150) || (C_L_IR_sensor <= 150)) {
 
-   
+    car1.StoptMove();
+    put_out();
+    noTone(A4);
 
-
-
-
+  }
+      }
    Serial.println();
  // delay(2000);
 }
