@@ -68,7 +68,7 @@ void loop() { // put your main code here, to run repeatedly:
   disCenter = S_center.getDistance();
 //  righ Ultrasonic Sensor
   disRight = S_right.getDistance();
-
+//----------------------------------------------------------------------------------------------------------------
   while (R_IR_sensor <= 800) {
    // fire = true;
      tone(A4, 6000);
@@ -102,12 +102,14 @@ void loop() { // put your main code here, to run repeatedly:
   while ( (C_R_IR_sensor <= 800) || (C_L_IR_sensor <= 800) ) {
     fire = true;
    tone(A4, 6000);
-    
+    car1.Move();
   
    
 
   }
-  
+ //=====================================================================
+
+  // sense obstacals from Center UltrasonicSensor and_Avoid them
   while (disCenter < 15 ) {
           car1.BackMove();
           Serial.println("BackMoveBackMoveBackMoveBackMoveBackMoveBackMove");
@@ -118,13 +120,69 @@ void loop() { // put your main code here, to run repeatedly:
       break;
     }
         }
+  //=====================================================================
+  //  sense obstacals from Right UltrasonicSensor and_Avoid them
+  while (disRight < 10 ) {
+    car1.BackMove();
+    car1.leftMove();  delay(570);
+    car1.Move(); delay(300);
+
+    while (R_IR_sensor <= 750) {
+      tone(A4, 6000);
+      car1.rightMove();
+      R_IR_sensor = analogRead(A0);
+      if (R_IR_sensor > 500  ) {
+        car1.StoptMove();
+        noTone(A4);
+        break;
+      }
+    }
+    Serial.println("BackMove");
+
+
+    disRight = S_right.getDistance();
+    if (disRight > 10 ) {
+      car1.StoptMove();
+      Serial.println("okBackMove");
+      break;
+    }
+  }
+
+  //=====================================================================
+
+  // sense obstacals from Left UltrasonicSensor and_Avoid them
+  while (disLeft < 10 ) {
+    car1.BackMove();
+    car1.rightMove();  delay(570);
+    car1.Move(); delay(300);
+
+    while (L_IR_sensor <= 750) {
+      tone(A4, 6000);
+      car1.leftMove();  delay(550);
+      L_IR_sensor = analogRead(A3);
+
+      if (L_IR_sensor > 500  ) {
+        car1.StoptMove();
+        noTone(A4);
+        break;
+      }
+    }
+    Serial.println("BackMove");
+
+    disLeft = S_left.getDistance();
+    if (disLeft > 10 ) {
+      car1.StoptMove();
+      Serial.println("okBackMove");
+      break;
+    }
+  }
   
       while ( ( disCenter >=16 ) && ( disCenter < 20) ) {
 
         
          if ( ( disRight >= disLeft ) && ( R_IR_sensor <= 890)  )
          {
-         car1.rightMove();
+         car1.leftMove();
            delay(550);
           Serial.println("في شرط اليمين");
           car1.StopMove();
@@ -134,7 +192,7 @@ void loop() { // put your main code here, to run repeatedly:
         
         else if ( ( disRight < disLeft ) && ( L_IR_sensor <= 890) )
         {
-          car1.leftMove();
+          car1.rightMove();
           delay(550);
           Serial.println("في شرط اليسار");
           car1.StopMove();
