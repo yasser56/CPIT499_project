@@ -107,32 +107,46 @@ void loop() { // put your main code here, to run repeatedly:
    
 
   }
-      if (centar < 30 ) {
-
-        if (centar == 15 ) {
+  
+  while (disCenter < 15 ) {
           car1.BackMove();
           Serial.println("BackMoveBackMoveBackMoveBackMoveBackMoveBackMove");
-        }
-        else if (righ > 40 ) {
-         car1.rightMove();
-          Serial.println("في شرط اليمين");
-          
+          disCenter = S_center.getDistance();
 
-        }
-        else
-        {
-          car1.leftMove();
-          
-          Serial.println("في شرط اليسار");
-          centar == 29;
-        }
-      } else {
-        Move();
-      } 
-    if ( C_R_IR_sensor > 500 ) {
-       car1.StoptMove();
+    if (disCenter >= 15){
+     car1.StopMove();
       break;
     }
+        }
+  
+      while ( ( disCenter >=16 ) && ( disCenter < 20) ) {
+
+        
+         if ( ( disRight >= disLeft ) && ( R_IR_sensor <= 890)  )
+         {
+         car1.rightMove();
+           delay(550);
+          Serial.println("في شرط اليمين");
+          car1.StopMove();
+           break;
+
+        }
+        
+        else if ( ( disRight < disLeft ) && ( L_IR_sensor <= 890) )
+        {
+          car1.leftMove();
+          delay(550);
+          Serial.println("في شرط اليسار");
+          car1.StopMove();
+          break;      
+        }
+        
+       else
+       {
+        R_IR_sensor = analogRead(A0);
+        L_IR_sensor = analogRead(A3);
+      } 
+    
 
    
 
