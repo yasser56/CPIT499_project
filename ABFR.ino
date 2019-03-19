@@ -180,7 +180,7 @@ void loop() { // put your main code here, to run repeatedly:
       while ( ( disCenter >=16 ) && ( disCenter < 20) ) {
 
         
-         if ( ( disRight >= disLeft ) && ( R_IR_sensor <= 890)  )
+         if ( ( disRight >= disLeft ) && ( L_IR_sensor <= 890)  )
          {
          car1.leftMove();
            delay(550);
@@ -190,7 +190,7 @@ void loop() { // put your main code here, to run repeatedly:
 
         }
         
-        else if ( ( disRight < disLeft ) && ( L_IR_sensor <= 890) )
+        else if ( ( disRight < disLeft ) && ( R_IR_sensor <= 890) )
         {
           car1.rightMove();
           delay(550);
